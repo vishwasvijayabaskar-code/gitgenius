@@ -1,0 +1,16 @@
+{
+  "name": "gitgenius-ai",
+  "version": "1.0.0",
+  "description": "AI-powered git commit messages, PR descriptions, and changelogs. Zero dependencies.",
+  "main": "src/index.js",
+  "bin": {
+    "gitgenius": "./src/index.js"
+  },
+  "keywords": ["git", "ai", "commit", "pull-request", "changelog", "openai", "anthropic", "cli"],
+  "author": "vishwasvijayabaskar-code",
+  "license": "MIT",
+  "dependencies": {},
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
