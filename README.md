@@ -107,6 +107,14 @@ gitgenius changelog v1.0.0 v1.1.0
 
 If both keys are set, Anthropic (Claude Haiku) is preferred — faster and cheaper.
 
+## Also By Me
+
+- [oneshot](https://github.com/vishwasvijayabaskar-code/oneshot) — One command, any LLM, instant answers from terminal
+- [aiterm](https://github.com/vishwasvijayabaskar-code/aiterm) — AI terminal assistant, auto-explain errors
+- [promptbattle](https://github.com/vishwasvijayabaskar-code/promptbattle) — Compare LLM responses side-by-side
+- [awesome-ai-agents](https://github.com/vishwasvijayabaskar-code/awesome-ai-agents) — Curated list of AI agent frameworks
+- [ai-system-design-primer](https://github.com/vishwasvijayabaskar-code/ai-system-design-primer) — System design for AI systems
+
 ## License
 
 MIT
