@@ -83,6 +83,19 @@ gitgenius changelog v1.0.0 v1.1.0
 # - Memory leak in WebSocket handler
 ```
 
+### `gitgenius review` — AI code review
+
+```bash
+gitgenius review             # Review all uncommitted changes
+gitgenius review --staged    # Review only staged changes
+
+# Output:
+# 🐛 **Bugs**: auth.js:42 — token check uses `<` not `<=`, off-by-one on expiry
+# 🔒 **Security**: None found
+# 💡 **Suggestions**: Extract validation into helper function
+# ✅ **Good**: Clear error messages, proper HTTP status codes
+```
+
 ## Why gitgenius?
 
 | Feature | gitgenius | aicommits | opencommit |
@@ -90,6 +103,7 @@ gitgenius changelog v1.0.0 v1.1.0
 | Commit messages | ✅ | ✅ | ✅ |
 | PR descriptions | ✅ | ❌ | ❌ |
 | Changelogs | ✅ | ❌ | ❌ |
+| Code review | ✅ | ❌ | ❌ |
 | Zero dependencies | ✅ | ❌ | ❌ |
 | Conventional commits | ✅ | ✅ | ✅ |
 | Style matching | ✅ reads history | ❌ | ❌ |
