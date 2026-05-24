@@ -294,6 +294,43 @@ async function changelogCmd(args) {
   console.log(changelog);
 }
 
+const REVIEW_SYSTEM = `You are a code reviewer. Review the diff for bugs, security issues, and improvements.
+
+Format:
+🐛 **Bugs**: (potential issues)
+🔒 **Security**: (vulnerabilities, if any)
+💡 **Suggestions**: (improvements)
+✅ **Good**: (what's done well)
+
+Rules:
+- Be specific — reference file names and line numbers
+- Only flag real issues, not style preferences
+- If code looks good, say so briefly
+- Max 10 bullet points total
+- Output ONLY the review`;
+
+async function reviewCmd(args) {
+  const staged = args.includes("--staged") || args.includes("-s");
+  const diff = getDiff(staged);
+  if (!diff.trim()) {
+    console.error(staged ? "No staged changes to review." : "No changes to review. Use --staged for staged only.");
+    process.exit(1);
+  }
+
+  const apiKey = getApiKey();
+  if (!apiKey) {
+    console.error("No API key found. Set OPENAI_API_KEY or ANTHROPIC_API_KEY.");
+    process.exit(1);
+  }
+
+  const provider = getProvider();
+  process.stderr.write("Reviewing changes...\n");
+
+  const prompt = `Review this diff:\n${diff.slice(0, 12000)}`;
+  const review = await makeRequest(provider, apiKey, REVIEW_SYSTEM, prompt);
+  console.log(review);
+}
+
 // ─── Main ──────────────────────────────────────────────────────────────────
 async function main() {
   const args = process.argv.slice(2);
@@ -314,9 +351,12 @@ async function main() {
     gitgenius commit --dry-run    Generate without prompting to commit
     gitgenius pr [base]           Generate PR description (default base: main)
     gitgenius changelog [from] [to]  Generate changelog between refs
+    gitgenius review              AI code review of uncommitted changes
+    gitgenius review --staged     Review only staged changes
 
   OPTIONS:
     --dry-run, -d   Preview only, don't commit
+    --staged, -s    Review staged changes only
     --help, -h      Show this help
 
   SETUP:
@@ -330,6 +370,8 @@ async function main() {
     git add -A && gitgenius commit
     gitgenius pr main
     gitgenius changelog v1.0.0 v1.1.0
+    gitgenius review
+    gitgenius review --staged
 `);
     process.exit(0);
   }
@@ -347,6 +389,10 @@ async function main() {
       case "changelog":
       case "cl":
         await changelogCmd(args.slice(1));
+        break;
+      case "review":
+      case "r":
+        await reviewCmd(args.slice(1));
         break;
       default:
         console.error(`Unknown command: ${command}. Use --help.`);
