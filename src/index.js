@@ -299,6 +299,12 @@ async function main() {
   const args = process.argv.slice(2);
   const command = args[0];
 
+  if (command === "--version" || command === "-v") {
+    const { version } = JSON.parse(readFileSync(join(__dirname, "..", "package.json"), "utf8"));
+    console.log(`gitgenius v${version}`);
+    process.exit(0);
+  }
+
   if (!command || command === "--help" || command === "-h") {
     console.log(`
   gitgenius - AI-powered git commit messages, PR descriptions, and changelogs.
